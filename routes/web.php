@@ -14,3 +14,5 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->get('/u/l','Test\IndexController@login');
+$router->get('/u/token','Test\IndexController@uCenter');
