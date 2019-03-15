@@ -52,4 +52,32 @@ class IndexController extends Controller
         }
         return $response;
     }
+    public function order(){
+//      var_dump($_SERVER);
+        $uri=$_SERVER['REQUEST_URI'];
+        $url=substr(md5($uri),0,10);
+        $ip=$_SERVER['SERVER_ADDR'];
+        $redis_key='str:'.$url.":".$ip;
+        $num=Redis::incr($redis_key);
+        Redis::expire($redis_key,5);
+//        echo 'count:'.$num;echo '</br>';die;
+        if($num>5){
+            $response=[
+                'errno'=>50002,
+                'msg'=>'Invaild token'
+            ];
+            Redis::sAdd('ip',$ip);
+            Redis::expire($redis_key,20);
+        }else{
+            $response=[
+                'errno'=>0,
+                'msg'=>'ok',
+                'data'=>[
+                    'aaa'=>'bbb'
+                ]
+            ];
+        }
+        return $response;
+
+    }
 }

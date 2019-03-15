@@ -16,3 +16,5 @@ $router->get('/', function () use ($router) {
 });
 $router->get('/u/l','Test\IndexController@login');
 $router->get('/u/token','Test\IndexController@uCenter');
+//接口测试
+$router->get('/order','Test\IndexController@order');
